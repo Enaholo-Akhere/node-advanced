@@ -6,7 +6,8 @@ const Joi = require('joi');
 const Users = require('../models/user');
 const bcrypt = require('bcrypt');
 const auth = require('../middleware/auth');
-const admin = require('../middleware/admin')
+const admin = require('../middleware/admin');
+const asyncMiddleware = require('../middleware/asyncMiddleware');
 
 const validateCourse = (user) => {
   const schema = Joi.object({
@@ -19,12 +20,14 @@ const validateCourse = (user) => {
   return ({ error, value } = schema.validate(user));
 };
 
-router.get('/me', [auth, admin], async (req, res) => {
-  const user = await Users.findById(req.user._id).select('-password -__v');
-  if (!user)
-    res.status(400).json({ message: 'user not found', success: false });
-  res.status(200).json({ data: user, message: 'user found', success: true });
-});
+router.get(
+  '/me',
+  [auth, admin],
+  asyncMiddleware(async (req, res) => {
+    const user = await Users.findById(req.user._id).select('-password -__v');
+    res.status(200).json({ data: user, message: 'user found', success: true });
+  })
+);
 
 router.get('/', auth, async (req, res) => {
   try {
