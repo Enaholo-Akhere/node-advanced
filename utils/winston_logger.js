@@ -9,11 +9,11 @@ const winston_logger = createLogger({
     //     level: 'info',
     //     format: format.combine(format.timestamp(), format.json()),
     // })
-    // new transports.File({
-    //   filename: 'info-logger.log',
-    //   level: 'info',
-    //   format: format.combine(format.timestamp(), format.json()),
-    // }),
+    new transports.File({
+      filename: 'info-logger.log',
+      level: 'info',
+      format: format.combine(format.timestamp(), format.json()),
+    }),
     new transports.MongoDB({
       level: 'info',
       db: 'mongodb://localhost/playground',
@@ -26,4 +26,14 @@ const winston_logger = createLogger({
   ],
 });
 
-module.exports = winston_logger;
+const winston_exceptions = createLogger({
+  transports: [
+    new transports.File({
+      filename: 'uncaughtException.log',
+      level: 'error',
+      format: format.combine(format.timestamp(), format.json()),
+    }),
+  ],
+});
+
+module.exports = { winston_logger, winston_exceptions };
