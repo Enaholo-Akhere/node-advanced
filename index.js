@@ -9,7 +9,22 @@ const app = express();
 const user = require('./routes/user');
 const home = require('./routes/home');
 const error = require('./middleware/error');
-const winston_logger = require('./utils/winston_logger');
+const { transports, format, createLogger } = require('winston');
+const { winston_logger, winston_exceptions } = require('./utils/winston_logger');
+
+process.on('uncaughtException', (ex) => {
+  console.log('We got an uncaught exception');
+  winston_exceptions.error(ex.message, ex);
+
+});
+
+const p = Promise.reject(new Error('failed miserably'));
+p.then(() => console.log('promised caught'));
+
+process.on('unhandledRejection', (ex) => {
+  console.log('We got an unhandled rejection');
+  winston_exceptions.error(ex.message, ex);
+});
 
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined');
