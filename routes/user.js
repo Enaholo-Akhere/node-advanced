@@ -24,8 +24,16 @@ router.get(
   '/me',
   [auth, admin],
   asyncMiddleware(async (req, res) => {
-    const user = await Users.findById(req.user._id).select('-password -__v');
-    res.status(200).json({ data: user, message: 'user found', success: true });
+    const user = await Users.findById(req.user._id).select(
+      '-password -__v'
+    );
+    if (!user)
+      return res
+        .status(401)
+        .json({ data: {}, message: 'user not found', success: false });
+    return res
+      .status(200)
+      .json({ data: user, message: 'user found', success: true });
   })
 );
 
