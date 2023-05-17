@@ -1,5 +1,4 @@
 const { transports, format, createLogger } = require('winston');
-const { collection } = require('../models/user');
 require('winston-mongodb');
 
 const winston_logger = createLogger({
@@ -29,8 +28,8 @@ const winston_logger = createLogger({
 const winston_exceptions = createLogger({
   transports: [
     new transports.File({
-      filename: 'uncaughtException.log',
-      level: 'error',
+      filename: 'uncaught-exception.log',
+      level: 'info',
       format: format.combine(format.timestamp(), format.json()),
     }),
   ],

@@ -1,5 +1,4 @@
-const { trusted } = require('mongoose');
-const winston_logger = require('../utils/winston_logger');
+const { winston_logger,  } = require('../startup/winston_logger');
 
 module.exports = (handle) => {
   return async (req, res, next) => {
@@ -13,8 +12,7 @@ module.exports = (handle) => {
         })
       );
     } catch (ex) {
-      res.status(400).json({ message: 'user not found', success: false });
       next(ex);
     }
-  }; 
+  };
 };
