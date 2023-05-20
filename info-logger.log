@@ -253,3 +253,5 @@
 {"level":"info","message":"connected to database","timestamp":"2023-05-17T22:46:16.042Z"}
 {"level":"info","message":"listening on port 4000","timestamp":"2023-05-17T22:46:18.337Z"}
 {"level":"info","message":"connected to database","timestamp":"2023-05-17T22:46:18.340Z"}
+{"level":"info","message":"listening on port 4000","timestamp":"2023-05-20T22:00:29.192Z"}
+{"level":"info","message":"connected to database","timestamp":"2023-05-20T22:00:29.199Z"}
