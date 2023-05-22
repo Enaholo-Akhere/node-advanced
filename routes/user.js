@@ -24,9 +24,7 @@ router.get(
   '/me',
   [auth, admin],
   asyncMiddleware(async (req, res) => {
-    const user = await Users.findById(req.user._id).select(
-      '-password -__v'
-    );
+    const user = await Users.findById(req.user._id).select('-password -__v');
     if (!user)
       return res
         .status(401)
