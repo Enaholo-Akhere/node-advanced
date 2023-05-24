@@ -1,28 +1,28 @@
 const { before } = require('lodash');
 const { sum, deleteUser, findOneUserById  } = require('../utils/helpers');
 
-let userData = [];
-console.log(userData);
+// let userData = [];
+// console.log(userData);
 
-beforeAll(() => {
-    userData = ['sarah', 'glory', 'victor'];
-      console.log('userData', userData);
+// beforeAll(() => {
+//     userData = ['sarah', 'glory', 'victor'];
+//       console.log('userData', userData);
     
-});
+// });
 
-beforeEach(() => {
-    console.log('before each test start');
-})
+// beforeEach(() => {
+//     console.log('before each test start');
+// })
 
-afterEach(() => {
-    console.log('after start');
-})
+// afterEach(() => {
+//     console.log('after start');
+// })
 
-afterAll(() => {
-    userData = []
-    console.log('userData', userData);
-  console.log('after all the test stops');
-});
+// afterAll(() => {
+//     userData = []
+//     console.log('userData', userData);
+//   console.log('after all the test stops');
+// });
 
 describe('number operations', () => {
   test('1 + 1 should equal 2', () => {
