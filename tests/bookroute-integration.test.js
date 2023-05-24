@@ -23,12 +23,12 @@ describe('Integration tests for book API', () => {
     expect(statusCode).toBe(200);
   });
 
-  test('POST /api/books - failure on invalid post body', async () => {
+  it('POST /api/books - failure on invalid post body', async () => {
     const { body, statusCode } = await request(app).post('/api/books').send({
-      name: '',
+      name: 'sfssfsf',
       author: 'John Travolta',
     });
-
+    // console.log('logging error', body);
     expect(statusCode).toBe(400);
     expect(body).toEqual({
       errors: [
