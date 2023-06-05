@@ -15,7 +15,7 @@ const validateCourse = (user) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(255).required(),
-    name: Joi.string().min(3),
+    name: Joi.string().min(5),
     isAdmin: Joi.boolean(),
   });
 
@@ -96,10 +96,11 @@ router.post('/', async (req, res) => {
 //get a user
 router.post('/login', async (req, res) => {
   const { error, value } = validateCourse(req.body);
-  console.log('value', value);
+  console.log('error is reaching here', error);
 
   if (error) {
     return res.status(400).send(error.details[0].message);
+    console.log('error', error);
   }
   try {
     const user = await Users.findOne({ email: value.email });
