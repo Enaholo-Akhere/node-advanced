@@ -1,16 +1,14 @@
 const mongoose = require('mongoose');
 const { winston_logger } = require('./winston_logger');
+const config = require('config');
 
 module.exports = (app) => {
-  const PORT = process.env.PORT || 5000;
-
+  const db = config.get('db');
   mongoose
-    .connect('mongodb://localhost/playground')
+    .connect(db)
     .then(() => {
-      winston_logger.info(`listening on port ${PORT}`);
-      app.listen(PORT, () => {
-        winston_logger.info('connected to database');
-      });
+      winston_logger.info(`connected to database ${db}`);
+      console.log(`connected to database ${db}`);
     })
     .catch((err) =>
       winston_logger.error('error: could not connect to database', err)
