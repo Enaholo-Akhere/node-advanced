@@ -8,12 +8,14 @@ const bcrypt = require('bcrypt');
 const auth = require('../middleware/auth');
 const admin = require('../middleware/admin');
 const asyncMiddleware = require('../middleware/asyncMiddleware');
+const { default: mongoose } = require('mongoose');
+const validateId = require('../middleware/validateObjectId');
 
 const validateCourse = (user) => {
   const schema = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().min(5).max(255).required(),
-    name: Joi.string().min(3),
+    name: Joi.string().min(5),
     isAdmin: Joi.boolean(),
   });
 
@@ -35,9 +37,22 @@ router.get(
   })
 );
 
-router.get('/', auth, async (req, res) => {
+// get user by id
+router.get('/:id', validateId, async (req, res) => {
   try {
-    data;
+    const user = await Users.findById({ _id: req.params.id });
+    console.log('user', user);
+    if (!user) throw new Error('user does not exist');
+    return res.status(200).json(user);
+  } catch (error) {
+    console.log(error.message);
+    return;
+  }
+});
+
+// get all users
+router.get('/', async (req, res) => {
+  try {
     const user = await Users.find();
     if (!user) throw new Error('user does not exist');
     res.status(200).json({ data: user });
@@ -81,10 +96,11 @@ router.post('/', async (req, res) => {
 //get a user
 router.post('/login', async (req, res) => {
   const { error, value } = validateCourse(req.body);
-  console.log('value', value);
+  console.log('error is reaching here', error);
 
   if (error) {
     return res.status(400).send(error.details[0].message);
+    console.log('error', error);
   }
   try {
     const user = await Users.findOne({ email: value.email });

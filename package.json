@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --verbose --detectOpenHandles"
   },
   "keywords": [],
   "author": "",
@@ -32,6 +32,8 @@
     "supertest": "^6.3.3"
   },
   "jest": {
-    "modulePathIgnorePatterns": ["books.json"]
+    "modulePathIgnorePatterns": [
+      "books.json"
+    ]
   }
 }
